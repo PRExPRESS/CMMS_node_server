@@ -1,4 +1,4 @@
-const { promises } = require('nodemailer/lib/xoauth2');
+
 const con = require('../Config/dbConnection');
 
 // add department
@@ -10,7 +10,7 @@ const create = (eqp) => {
     return new Promise((resolve, reject) => {
         con.query(sql, value, (err, result) => {
             if (err) {
-                //console.error(err);
+                console.error(err);
                 reject({ error: 'Error inserting data' }); // Sending error response as JSON
             } else {
                 resolve(result);
@@ -22,7 +22,7 @@ const create = (eqp) => {
 //get all departments
 const getAllEQCat=()=>{
     return new Promise((resolve,reject)=>{
-        sql = "SELECT * FROM equip_category";
+        sql = "SELECT * FROM equip_category ORDER BY `id` DESC";
         try {
             con.query(sql,(err,result)=>{
                 if(err){
@@ -41,10 +41,10 @@ const getAllEQCat=()=>{
 // edit department
 const edit = (eqp)=>{
     //console.log(dep);
-    const {id, department_name}= dep;
-    const value = [department_name];
+    const {id, category}= eqp;
+    const value = [category];
     console.log(value)
-    const sql  = `UPDATE department SET department_name=? WHERE id = ${id}`;
+    const sql  = `UPDATE equip_category SET category=? WHERE id = ${id}`;
     console.log(sql)
     return new Promise((resolve,reject)=>{
         con.query(sql,value,(err, result)=>{
@@ -63,7 +63,7 @@ const edit = (eqp)=>{
 // get single dep
 const getEqp=(id)=>{
     return new Promise((resolve,reject)=>{
-        sql = `SELECT * FROM department WHERE id =${id}` ;
+        sql = `SELECT * FROM equip_category WHERE id =${id}` ;
         
         con.query(sql,(err,result)=>{
             if(err){
@@ -78,9 +78,9 @@ const getEqp=(id)=>{
     });
 }
 
-//delete department
+//delete category
 const del=(id)=>{
-    const sql = `DELETE FROM department WHERE id = ${id}`
+    const sql = `DELETE FROM equip_category WHERE id = ${id}`
     return new Promise((resolve,reject)=>{
         con.query(sql,(err, result)=>{
             if(err){

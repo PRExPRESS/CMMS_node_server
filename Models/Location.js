@@ -85,7 +85,7 @@ const getLoc = (id)=>{
 
 //get location by room name
 const getLocByRoom = (room)=>{
-    const sql =  `SELECT * FROM location_manager WHERE room = ${room} ORDER BY \`id\` DESC`
+    const sql =  `SELECT * FROM jobs WHERE location = '${room}' ORDER BY \`id\` DESC`
     return new Promise((resolve,reject)=>{
         con.query(sql,(err, result)=>{
             if(err){

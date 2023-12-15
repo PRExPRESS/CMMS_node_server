@@ -131,11 +131,9 @@ const getLocByRoom = asyncHandler(async(req,res)=>{
     const room = req.params.room;
      try {
          const response = await Location.getLocByRoom(room);
-         if(response.length >0){
+         
              res.status(200).json(response);
-         }else{
-             res.status(404).json({message:"No record found!"});
-         }
+         
      } catch (error) {
          res.status(500).json({error:"Internal server error!"});
      }
@@ -146,10 +144,10 @@ const update = asyncHandler(async (req,res)=>{
     const locId = req.params.id;
     const {location_type,room,floor_no,description}=req.body;
     const value = {id:locId,location_type,room,floor_no,description};
-    //console.log("fn triggered ",id)
+    
     try {
         const isLoc = await Location.getLoc(locId);
-        console.log(value)
+        
         if(isLoc.length>0){
             const response = await Location.update(value);
             if(response.affectedRows==1)
@@ -159,6 +157,7 @@ const update = asyncHandler(async (req,res)=>{
         }else
             res.status(404).json({message:"Location not Found"});
     } catch (error) {
+        console.log(error)
         res.status(500).json({Error:"Internal Server Error!"});
     }
 
