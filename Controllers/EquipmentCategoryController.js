@@ -111,6 +111,22 @@ const del = asyncHandler(async (req, res) => {
     }
   });
   
+  const getEqpByCat= asyncHandler(async(req,res)=>{
+        const cat=req.params.cat;
+        try {
+            const response = await EQP.getEqpByCat(cat);
+            if(Array.isArray(response)){
+                res.status(200).json(response);
+            }
+            
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Internal Server Error" });
+        }
+        
+
+  });
 
 
 module.exports = {
@@ -118,5 +134,6 @@ module.exports = {
     getAllEQPC,
     getEQPC,
     update,
-    del
+    del,
+    getEqpByCat
 }

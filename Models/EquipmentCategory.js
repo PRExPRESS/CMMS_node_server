@@ -92,11 +92,30 @@ const del=(id)=>{
     })
 }
 
+//get eqp list by category
+const getEqpByCat=(cat)=>{
+    return new Promise((resolve,reject)=>{
+        sql = `SELECT * FROM equip_jobs WHERE category ='${cat}' ORDER BY \`id\` DESC` ;
+        
+        con.query(sql,(err,result)=>{
+            if(err){
+                //console.log(err)
+                reject(err);
+            }else{
+                //console.log(result);
+                resolve(result)
+            }
+        });
+        
+    });
+}
+
 module.exports = {
     create,
     getAllEQCat,
     edit,
     getEqp,
-    del
+    del,
+    getEqpByCat
 }
 

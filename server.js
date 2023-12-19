@@ -30,9 +30,12 @@ app.use('/api/eqpcat',eqpCatRoutes);
 app.use('/api/settings',settingsRoutes);
 app.use('/api/meter',meterRoutes);
 app.use('/api/equipment',eqpRoutes);
-app.get('/',(req,res)=>{
-    res.send('hello!')
-})
+
+app.use(express.static(path.join(__dirname, 'View')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'View', 'index.html'));
+});
 app.get('/add-job',(req,res)=>{
     res.sendFile(__dirname+'/addjob.html');
 })
